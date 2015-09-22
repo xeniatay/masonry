@@ -7,9 +7,10 @@ _.extend(AbstractView.prototype, {
     var template = $('#' + templateId),
         container = $('#' + containerId);
 
-    // this.hostElement = $('div').html(template.clone().html());
-    this.hostElement = $('<div></div').html( template.html() );
-    container.append(this.hostElement);
+    this.hostElement = $('<div></div')
+      .addClass('single-photo')
+      .html( template.html() )
+      .appendTo(container);
   }
 });
 
@@ -17,7 +18,7 @@ _.extend(AbstractView.prototype, {
 
 var PhotoView = function(containerId, model) {
   this.container = $('#' + containerId);
-  this._instantiateInterface('single-photo-view', containerId);
+  this._instantiateInterface('single-photo-template', containerId);
   this.model = model;
   this.initialize();
 };

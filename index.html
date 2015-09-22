@@ -11,7 +11,6 @@
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <!-- TODO -->
   <!-- Custom CSS -->
-  <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="styles/css/main.css">
   <!-- TODO -->
   <!-- Scripts -->
@@ -27,13 +26,15 @@
   <header>
   </header>
   <section class="main-content">
-    <div id="photos-container"></div>
+    <div id="photos-container" class="masonry-wrapper photos-container"></div>
   </section>
-  <template id="single-photo-view">
+  <template id="single-photo-template">
     <img class="photo-img" src="" alt="">
-    <span class="photo-title"></span>
-    <span class="photo-fave-icon"></span>
-    <span class="photo-view-count"></span>
+    <div class="photo-info">
+      <span class="photo-title"></span>
+      <span class="photo-fave-icon"></span>
+      <span class="photo-view-count"></span>
+    </div>
   </template>
 
   <footer>
