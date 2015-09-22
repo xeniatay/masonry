@@ -23,14 +23,18 @@
 </head>
 
 <body>
-  <header>
+  <header class="header">
+    <div class="header-content clearfix">
+      <span class="page-title pull-left">Zenreach Frontend Coding Challenge</span>
+      <span class="fave-count pull-right"></span>
+    </div>
   </header>
   <section class="main-content">
     <div id="photos-container" class="masonry-wrapper photos-container"></div>
   </section>
   <template id="single-photo-template">
-    <img class="photo-img" src="" alt="">
-    <div class="photo-info">
+    <div class="photo-wrapper">
+      <img class="photo-img" src="" alt="">
       <span class="photo-title"></span>
       <span class="photo-fave-icon"></span>
       <span class="photo-view-count"></span>
