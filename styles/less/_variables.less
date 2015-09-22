@@ -1,0 +1,73 @@
+//
+// Variables & Bootstrap Variable Overrides
+// --------------------------------------------------
+
+//== Colors
+
+//## Gray and brand colors
+
+@gray-darkest:          #222222;
+@gray-dark:             #333333;
+@gray:                  #969696;
+@gray-light:            #efefef;
+@gray-lightest:         #f8f8f8;
+
+@brand-primary:         #2e9941;
+@brand-secondary:       #212E36;
+@fave: #FFD700;
+
+//== Additional Colors
+@white: #FFFFFF;
+@black: #2f2f2f;
+
+@header-height: 60px;
+
+//== Scaffolding
+//
+@text-color:            @black;
+@font-family-sans-serif:    'Helvetica Neue',Helvetica Neue,Helvetica,Arial,sans-serif;
+@font-size-base:            14px;
+@border-radius-base:        0px;
+@border-radius-large:       0px;
+@border-radius-small:       0px;
+
+//== Additional Variables
+
+//== Additional responsive variables
+//
+@screen-phone-max: @screen-xs-max;
+@screen-tablet-max: @screen-sm-max;
+@screen-desktop-max: @screen-md-max;
+
+/* Responsive Variable Values (see below)
+//@screen-phone-max: 767px;
+//@screen-tablet-max: 991px;
+//@screen-desktop-max: 1199px;
+//
+//@phone-v: (max-width: 319px); // phone-vertical
+//@phone-h: (min-width: 320px) and (max-width: 479px); // phone-horizontal
+//@phone: (max-width: 479px);
+//@tablet: (min-width: 480px) and (max-width: 767px);
+//@desktop: (min-width: 768px) and (max-width: 991px);
+//@desktop-lg: (min-width: 992px);
+//
+//@lt-tablet: (max-width: 479px); // less than tablet
+//@lt-desktop: (max-width: 767px); // less than dekstop
+//@lt-desktop-lg: (max-width: 991px); // less than desktop-large
+//
+//@desktop-only: (min-width: 768px);
+*/
+
+@phone-v: ~"(max-width: 319px)";
+@phone-h: ~"(min-width: 320px) and (max-width: 479px)";
+@phone: ~"(max-width: 479px)";
+@tablet: ~"(min-width: @{screen-xs}) and (max-width: @{screen-xs-max})";
+@desktop: ~"(min-width: @{screen-sm}) and (max-width: @{screen-sm-max})";
+@desktop-lg: ~"(min-width: @{screen-desktop})";
+
+@lt-tablet: @phone; // max-width: 479px;
+@lt-desktop: ~"(max-width: @{screen-xs-max})";
+@lt-desktop-lg: ~"(max-width: @{screen-md-max})";
+
+@desktop-only: ~"(min-width: @{screen-sm})";
+@window-max: ~"(min-width: 1440px)";

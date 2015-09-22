@@ -1,34 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Zenreach Frontend Coding Challenge</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Masonry</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="Photostream from 500px in a masonry layout">
 
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Photostream from 500px in a masonry layout">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles/css/main.css">
 
-    <!-- TODO wat is this -->
-    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-
-    <!-- TODO -->
-    <!-- Custom CSS -->
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-
-    <!-- TODO -->
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/js/main.js"></script>
-
-    <!-- TODO Analytics -->
+  <!-- Analytics-->
+  <script type="text/javascript">
+    window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var n=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(n?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(a,o);for(var r=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=r(p[c])};
+    heap.load("1713746417");
+  </script>
 </head>
+
 <body>
+  <header class="header">
+    <div class="header-content clearfix">
+      <span class="page-title pull-left">Masonry</span>
+      <span id="fave-count" class="fave-count pull-right">0</span>
+    </div>
+  </header>
+  <section class="main-content">
+    <div id="photos-container" class="masonry-wrapper photos-container"></div>
+    <div class="spinner">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="bar bar3"></div>
+        <div class="bar bar4"></div>
+        <div class="bar bar5"></div>
+    </div>
+  </section>
+  <template id="single-photo-template">
+    <div class="photo-wrapper">
+      <div class="photo-img"></div>
+      <!-- <img class="photo-img" src="" alt=""> -->
+      <span class="photo-title"></span>
+      <label class="photo-fave-button">
+        <input class="photo-fave-checkbox hidden" type="checkbox">
+      </label>
+      <span class="photo-view-count"></span>
+    </div>
+  </template>
 
-
-    <footer>
-    </footer>
+  <footer>
+  </footer>
+  <script data-main="js/app/app" src="node_modules/requirejs/require.js"></script>
 </body>
 </html>
