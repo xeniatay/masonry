@@ -26,7 +26,7 @@
   <header class="header">
     <div class="header-content clearfix">
       <span class="page-title pull-left">Masonry</span>
-      <span class="fave-count pull-right"></span>
+      <span id="fave-count" class="fave-count pull-right">0</span>
     </div>
   </header>
   <section class="main-content">
@@ -36,7 +36,9 @@
     <div class="photo-wrapper">
       <img class="photo-img" src="" alt="">
       <span class="photo-title"></span>
-      <span class="photo-fave-icon"></span>
+      <label class="photo-fave-button">
+        <input class="photo-fave-checkbox hidden" type="checkbox">
+      </label>
       <span class="photo-view-count"></span>
     </div>
   </template>

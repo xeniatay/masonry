@@ -28,5 +28,8 @@ $(document).ready(function() {
 
 function displayPhoto(photoModel) {
   var curPhotoView = new PhotoView('photos-container', photoModel);
-  console.log(photoModel);
+}
+
+function updateFaveCount() {
+  console.log($('.photo-fave-checkbox:checked').length);
 }

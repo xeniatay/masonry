@@ -27,13 +27,24 @@ _.extend(PhotoView.prototype, AbstractView.prototype, {
   initialize: function() {
     this.img = $(this.hostElement).find('.photo-img');
     this.title = $(this.hostElement).find('.photo-title');
-    this.faveIcon = $(this.hostElement).find('.photo-fave-icon');
+    this.faveInput = $(this.hostElement).find('.photo-fave-checkbox');
     this.viewCount = $(this.hostElement).find('.photo-view-count');
 
     this.img.attr('src', this.model.image_url);
     this.title.html(this.model.name);
     this.viewCount.html(this.model.times_viewed);
+
+    this.initEvents();
   },
-  initEvents: function() {},
+  initEvents: function() {
+    this.faveInput.change( _.bind(this.setFave, this) );
+  },
+  setFave: function() {
+    this.hostElement.toggleClass('active');
+    this.updateFaveCount();
+  },
+  updateFaveCount: function() {
+    $('#fave-count').html( $('.photo-fave-checkbox:checked').length );
+  },
   initListeners: function() {},
 });
