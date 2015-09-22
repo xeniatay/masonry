@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Zenreach Frontend Coding Challenge</title>
-
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Photostream from 500px in a masonry layout">
-
-    <!-- TODO wat is this -->
-    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-
-    <!-- TODO -->
-    <!-- Custom CSS -->
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="styles/css/main.css">
-
-    <!-- TODO -->
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script><!-- jQuery CDN -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script><!-- Bootstrap CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="js/main.js"></script>
-
-    <!-- TODO Analytics -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Zenreach Frontend Coding Challenge</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="Photostream from 500px in a masonry layout">
+  <!-- TODO wat is this -->
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <!-- TODO -->
+  <!-- Custom CSS -->
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles/css/main.css">
+  <!-- TODO -->
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- jQuery CDN -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- Bootstrap CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <!-- TODO Analytics -->
 </head>
+
 <body>
-    <header>
-    </header>
+  <header>
+  </header>
+  <section class="main-content">
+    <div id="photos-container"></div>
+  </section>
+  <template id="single-photo-view">
+    <img class="photo-img" src="" alt="">
+    <span class="photo-title"></span>
+    <span class="photo-fave-icon"></span>
+    <span class="photo-view-count"></span>
+  </template>
 
-    <section class="main-content">
-        hi
-    </section>
-
-    <template id="single-photo-view">
-
-    </template>
-
-    <footer>
-    </footer>
+  <footer>
+  </footer>
+  <script src="js/view.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

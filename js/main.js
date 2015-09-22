@@ -1,11 +1,14 @@
+var PhotoView;
+
 $(document).ready(function() {
 
   var API_500_PHOTOS = 'https://api.500px.com/v1/photos';
 
   $.get(API_500_PHOTOS, {
+    consumer_key: 'yxaXMCw9aobTttp9xGIS5ejH8ynzUMTWN2CQz0WI',
     feature: 'popular',
-    page: 1,
-    consumer_key: 'yxaXMCw9aobTttp9xGIS5ejH8ynzUMTWN2CQz0WI'
+    image_size: 30,
+    page: 1
   }).done(function(data) {
     _.each(data.photos, function(photo) {
       displayPhoto(photo);
@@ -23,6 +26,7 @@ $(document).ready(function() {
 
 });
 
-function displayPhoto(photo) {
-  console.log(photo);
+function displayPhoto(photoModel) {
+  var curPhotoView = new PhotoView('photos-container', photoModel);
+  console.log(photoModel);
 }
