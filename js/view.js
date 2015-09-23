@@ -1,59 +1,80 @@
-/*** Abstract View ***/
-
-var AbstractView = function() {};
-
-_.extend(AbstractView.prototype, {
-  _instantiateInterface: function(templateId, containerId) {
-    var template = $('#' + templateId),
-        container = $('#' + containerId);
-
-    this.hostElement = $('<div></div')
-      .addClass('single-photo')
-      .html( template.html() )
-      .appendTo(container);
+define(["masonry"], function() {
+  function photosView(model) {
+    this.model = model;
   }
-});
 
-/*** Photo View ***/
+  photosView.prototype = {
+    _cloneTemplate: function(templateId, containerId) {
+      var template = $('#' + templateId),
+          container = $('#' + containerId),
+          clonedTemplate = $('<div></div')
+            .addClass('single-photo')
+            .html( template.html() );
+            // .appendTo(container);
 
-var PhotoView = function(containerId, model) {
-  this.container = $('#' + containerId);
-  this._instantiateInterface('single-photo-template', containerId);
-  this.model = model;
-  this.initialize();
-};
+      return clonedTemplate;
+    },
 
-_.extend(PhotoView.prototype, AbstractView.prototype, {
-  initialize: function() {
-    this.img = $(this.hostElement).find('.photo-img');
-    this.title = $(this.hostElement).find('.photo-title');
-    this.faveInput = $(this.hostElement).find('.photo-fave-checkbox');
-    this.viewCount = $(this.hostElement).find('.photo-view-count');
+    initialize: function(containerId) {
+      this.containerId = containerId;
+      this.container = $('#' + containerId);
+      var masonry = require('./masonry');
+      this.mason = new masonry();
 
-    // this.img.attr('src', this.model.image_url);
-    var h = this.model.height,
-        w = this.model.width;
+      this.render();
 
-    this.img.css({
-      backgroundImage: 'url(' + this.model.image_url + ')',
-      paddingBottom: (h > w) ? '100%' : ( (h / w * 100) + '%' ),
-      height: 0,
-      width: (h > w) ? ( (256 / h * w) + 'px' ) : '100%'
-    });
-    this.title.html(this.model.name);
-    this.viewCount.html(this.model.times_viewed);
+      // TODO this
+      // this.initEvents();
+    },
 
-    this.initEvents();
-  },
-  initEvents: function() {
-    this.faveInput.change( _.bind(this.setFave, this) );
-  },
-  setFave: function() {
-    this.hostElement.toggleClass('active');
-    this.updateFaveCount();
-  },
-  updateFaveCount: function() {
-    $('#fave-count').html( $('.photo-fave-checkbox:checked').length );
-  },
-  initListeners: function() {},
+    render: function() {
+      _.each(this.model.photos, function(photo) {
+        this.renderPhoto(photo);
+      }, this);
+
+      this.mason.initialize();
+    },
+
+    renderPhoto: function (photo) {
+      var template = this._cloneTemplate('single-photo-template', this.containerId);
+
+      var img = $(template).find('.photo-img'),
+          title = $(template).find('.photo-title'),
+          faveInput = $(template).find('.photo-fave-checkbox'),
+          viewCount = $(template).find('.photo-view-count');
+
+      // this.img.attr('src', photo.image_url);
+      var h = photo.height,
+          w = photo.width;
+
+      img.css({
+        backgroundImage: 'url(' + photo.image_url + ')',
+        paddingBottom: (h > w) ? '100%' : ( (h / w * 100) + '%' ),
+        height: 0,
+        width: (h > w) ? ( (256 / h * w) + 'px' ) : '100%'
+      });
+
+      title.html(photo.name);
+      viewCount.html(photo.times_viewed);
+
+      this.container.append(template);
+    },
+
+    initEvents: function() {
+      this.faveInput.change( _.bind(this.setFave, this) );
+    },
+
+    setFave: function() {
+      this.hostElement.toggleClass('active');
+      this.updateFaveCount();
+    },
+
+    updateFaveCount: function() {
+      $('#fave-count').html( $('.photo-fave-checkbox:checked').length );
+    }
+
+
+  };
+
+  return photosView;
 });
