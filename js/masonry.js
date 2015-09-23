@@ -38,10 +38,12 @@ define(function () {
         this.allPhotos = model.allPhotos;
       }
 
-      if ( !this.hasNewPhotos() ) { return; }
-
       var photoElems = this.getPhotoElems();
-      this.calcAllCoords(photoElems);
+
+      if ( this.hasNewPhotos() ) {
+        this.calcAllCoords(photoElems);
+      }
+
       this.displayPhotos(photoElems);
     },
 
@@ -84,10 +86,12 @@ define(function () {
     * @return {jqueryObject}
     */
     getPhotoElems: function() {
-      var sliceStart = this.allPhotos.length - this.photos.length,
-          sliceEnd = this.allPhotos.length;
+      // var sliceStart = this.allPhotos.length - this.photos.length,
+      //     sliceEnd = this.allPhotos.length;
 
-      return $('.single-photo').slice(sliceStart, sliceEnd);
+      // return $('.single-photo').slice(sliceStart, sliceEnd);
+
+      return $('.single-photo');
     },
 
     /**
@@ -105,6 +109,7 @@ define(function () {
 
     /**
     * Calculate the {x, y} coordinates of each new photo
+    * @param {array} Array of .single-photo elements corresponding to this.photos
     * @return {void}
     */
     calcAllCoords: function(photoElems) {
@@ -114,14 +119,22 @@ define(function () {
       if (this.coords[this.numCols]) {
         coords = this.coords[this.numCols];
       } else {
-        coords = [];
+        coords = this.coords[this.numCols] = [];
       }
 
       _.each(photoElems, function(photo, index) {
-        var i = sliceStart + index,
-            curCol = i % this.numCols,
-            photoAbove;
+        var i = sliceStart + index;
+        this.calcCoords(photo, coords, i);
+      }, this);
+    },
 
+    /**
+    * Calculate the {x, y} coordinates of a photo
+    * @return {void}
+    */
+    calcCoords: function(photo, coords, i) {
+        var curCol = i % this.numCols,
+            photoAbove;
 
         // TODO test if coords == length of photo?
         coords[i] = {};
@@ -129,11 +142,8 @@ define(function () {
         // Set width so that we can get the proportionate height
         $(photo).css({ width: this.COL_WIDTH + 'px' });
 
-        // If first row, photo's topY = 0
         if (i < this.numCols) {
-          coords[i].topY = 0;
-
-        // Else, photo's topY = photoAbove.bottomY + vertical gutter
+          coords[i].topY = 0; // first row of images
         } else {
           photoAbove = coords[i - this.numCols];
           coords[i].topY = photoAbove.bottomY + this.COL_V_GUTTER;
@@ -141,13 +151,9 @@ define(function () {
 
         coords[i].x = (this.COL_WIDTH + this.COL_H_GUTTER) * curCol;
         coords[i].bottomY = coords[i].topY + $(photo).outerHeight();
-        console.log(i, coords[i]);
 
         // Keep track of the lowest bottomY coordinate
         this.containerHeight = Math.max(coords[i].bottomY, this.containerHeight);
-      }, this);
-
-      this.coords[this.numCols] = coords;
     },
 
     /**

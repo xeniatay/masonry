@@ -59,7 +59,6 @@ define(function () {
     */
     updateFaveCount: function() {
       var count = $('.photo-fave-checkbox:checked').length;
-      console.log(count);
       this.faveCount.html(count);
     },
 
