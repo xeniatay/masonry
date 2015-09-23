@@ -136,7 +136,6 @@ define(function () {
         var curCol = i % this.numCols,
             photoAbove;
 
-        // TODO test if coords == length of photo?
         coords[i] = {};
 
         // Set width so that we can get the proportionate height
@@ -164,7 +163,6 @@ define(function () {
       var coords = this.coords[this.numCols],
           sliceStart = this.allPhotos.length - photoElems.length;
 
-      // TODO support other translates
       _.each(photoElems, function(photo, index) {
         var i = sliceStart + index;
 
