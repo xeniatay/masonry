@@ -1,41 +1,87 @@
+/**
+ * Controller for Photos Module
+ *
+ * @author      Xenia Tay
+ * @file        controller.js
+ */
+
 define(function () {
-  function photosController() {}
+  function photosController(model, view) {
+    this.initialize(model, view);
+  }
 
   photosController.prototype = {
-    _instantiateInterface: function(templateId, containerId) {
-      var template = $('#' + templateId),
-          container = $('#' + containerId);
 
-      this.hostElement = $('<div></div')
-        .addClass('single-photo')
-        .html( template.html() )
-        .appendTo(container);
-    },
-
-    initialize: function() {
-
+    /**
+    * Constructor
+    * @param {model} Controller must be initialized with photosModel
+    * @param {view} Controller must be initialized with photosView
+    * @return {void}
+    */
+    initialize: function(model, view) {
+      this.model = model;
+      this.view = view;
+      this.faveCount = $('#fave-count');
       this.initEvents();
     },
 
+    /**
+    * Initialize event listeners
+    * @return {void}
+    */
     initEvents: function() {
-      this.faveInput.change( _.bind(this.setFave, this) );
-      $(window).scroll( _.debounce( _.bind(this.checkScrollState(), this), 300 ) );
+      // For favouriting photos
+      $(document).click( _.bind(function(e) {
+        if ( $(e.target).is('.photo-fave-button') ) {
+          this.setFave(e.target);
+        }
+      }, this) );
+
+      // For infinite scrolling
+      $(window).scroll( _.throttle( _.bind(this.loadPhotos, this), 100) );
     },
 
-    setModel: function (model) {
-      this.model = model;
+    /**
+    * Update a photo's 'Favourited' state
+    * @return {void}
+    */
+    setFave: function(faveBtn) {
+      var container = $(faveBtn).closest('.single-photo');
+      container.toggleClass('active');
+      this.updateFaveCount();
     },
 
-
-    checkScrollState: function() {
-      if ( $(window).scrollTop() + $(window).height() > ( $(document).height() - 50 ) ) {
-        this.loadPhotos();
-      }
+    /**
+    * Update 'Favourited Photos' count
+    * @return {void}
+    */
+    updateFaveCount: function() {
+      this.faveCount.html( $('.photo-fave-checkbox:checked').length );
     },
 
+    /**
+    * Check if user is scrolled to near-bottom
+    * @return {bool}
+    */
+    isScrolledBottom: function() {
+      var scrolledBottom =  $(window).scrollTop() + $(window).height(),
+          docBottom = $(document).height() - 100;
+
+      return (scrolledBottom > docBottom);
+    },
+
+    /**
+    * Load next batch of photos
+    * Infinite scroll, to infinity and beyond!
+    * @return {void}
+    */
     loadPhotos: function() {
-      this.model.getMorePhotos();
-      this.view.displayPhotos();
+      if ( this.isScrolledBottom() ) {
+        this.model.getMorePhotos( _.bind(function() {
+          this.view.setModel(this.model);
+          this.view.render();
+        }, this) );
+      }
     }
   };
 
