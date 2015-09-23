@@ -2,7 +2,7 @@
 
 ### See it in action
 
-Open `index.html`!
+Open `index.html`, or go to [http://xeniatay.com/masonry/](http://xeniatay.com/masonry/)!
 
 ### Project Setup
 
