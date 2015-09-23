@@ -46,9 +46,11 @@ define(function () {
     * @return {void}
     */
     setFave: function(faveBtn) {
-      var container = $(faveBtn).closest('.single-photo');
+      var container = $(faveBtn).closest('.single-photo'),
+          faveInput = $(faveBtn).find('.photo-fave-checkbox');
+
       container.toggleClass('active');
-      this.updateFaveCount();
+      faveInput.change( _.bind(this.updateFaveCount, this) );
     },
 
     /**
@@ -56,7 +58,9 @@ define(function () {
     * @return {void}
     */
     updateFaveCount: function() {
-      this.faveCount.html( $('.photo-fave-checkbox:checked').length );
+      var count = $('.photo-fave-checkbox:checked').length;
+      console.log(count);
+      this.faveCount.html(count);
     },
 
     /**
