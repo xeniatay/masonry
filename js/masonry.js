@@ -4,130 +4,88 @@ var Masonry = function() {
 };
 
 _.extend(Masonry.prototype, {
-  _instantiateInterface: function(templateId, containerId) {
-    // var template = document.getElementById(templateId),
-    //     containerElem = document.getElementById(containerId);
 
-    // this.hostElement = document.createElement('div');
-    // this.hostElement.classList.add('friends-list-host');
-    // this.hostElement.innerHTML = template.innerHTML;
-    // containerElem.appendChild(this.hostElement);
-
-  },
+  // CONSTANTS
+  COL_WIDTH: 256,
+  COL_H_GUTTER: 10, // horizontal
+  COL_V_GUTTER: 10, // vertical
 
   initialize: function() {
+    this.coords = {};
+    this.photosContainer = $('#photos-container');
+
     this.initEvents();
   },
 
+  initMasonry: function() {
+    this.updateNumCols();
+    this.calcCoords();
+    this.displayPhotos();
+  },
+
+  updateNumCols: function() {
+    this.numCols = Math.floor( $(window).width() / (this.COL_WIDTH + this.COL_H_GUTTER) );
+    this.updateContainerWidth();
+  },
+
+  updateContainerWidth: function() {
+    this.photosContainer.css({ width: (this.COL_WIDTH + this.COL_H_GUTTER) * this.numCols })
+  },
+
+  updateContainerHeight: function() {
+    var coords = this.coords[this.numCols];
+    this.photosContainer.css({ height: coords[coords.length - 1].bottomY + this.COL_V_GUTTER });
+  },
+
+  calcCoords: function() {
+    if (this.coords[this.NumCols]) {
+      return;
+    } else {
+      var coords = this.coords[this.numCols] = [];
+    }
+
+    _.each($('.single-photo'), function(photo, i) {
+      var photoabove,
+          curCol = i % this.numCols;
+
+      coords[i] = {};
+
+      // Set width so that we can get the proportionate height
+      $(photo).css({ width: this.COL_WIDTH + 'px' });
+
+      // If first row, photo's topY = 0
+      if (i < this.numCols) {
+        coords[i].topY = 0;
+
+      // Else, photo's topY = photoAbove.bottomY + vertical gutter
+      } else {
+        photoAbove = coords[i - this.numCols];
+        coords[i].topY = photoAbove.bottomY + this.COL_V_GUTTER;
+      }
+
+      coords[i].x = (this.COL_WIDTH + this.COL_H_GUTTER) * curCol;
+      coords[i].bottomY = coords[i].topY + $(photo).outerHeight();
+    }, this);
+  },
+
+  displayPhotos: function() {
+    var coords = this.coords[this.numCols];
+
+    _.each($('.single-photo'), function(photo, i) {
+      $(photo).css({
+        transform: 'translate3d(' + coords[i].x + 'px, ' + coords[i].topY + 'px, 0)',
+        position: 'absolute'
+      });
+    });
+
+    this.updateContainerHeight();
+  },
+
   initEvents: function() {
+    $(window).resize( _.debounce( _.bind(this.onResize, this), 100) );
   },
 
-  calcCoords: function() {
-    // given a list of all the elements
-    // all their widths are 256px
-
-  },
-
-  /**
-  * Calculate list of element coordinates using width, height and margin
-  * Attach coordinates to each element as a data attribute
-  * @return {void}
-  * @method calcCoords
-  */
-  calcCoords: function() {
-
-    var numCols = Math.floor(this.viewportWidth / this.itemSize.w),
-        x, y, coord;
-
-    for (var i = 0, j = this.items.size(); i < j; i++) {
-        x = (i % numCols) * (this.itemSize.w + MARGIN_LEFT) + MARGIN_LEFT;
-        y = Math.floor(i / numCols) * (this.itemSize.h + MARGIN_BOTTOM);
-
-        this.coords[i] = {
-            x: x,
-            y: y
-        };
-
-        this.items.item(i).setAttribute('data-pos', x + ',' + y);
-    }
-
-  },
-
-  /**
-   * Initialize element positions
-   * @return {void}
-   * @method initPositions
-   */
-  initPositions: function() {
-
-    var item, x, y, i;
-    for (i = 0; i < this.items.size(); i++) {
-        x = this.coords[i].x;
-        y = this.coords[i].y;
-        item = this.items.item(i);
-        item.addClass('list-item-abs');
-        this.displayItem(item, x, y);
-    }
-
-  },
-
-  /**
-   * Display items with transition to fade in if hidden, and slide into position
-   * @return {void}
-   * @method displayItems
-   */
-  displayItems: function(items) {
-
-    var x, y;
-
-    for (var i = 0, j = items.length; i < j; i++) {
-        this.displayItem(items[i], this.coords[i].x, this.coords[i].y);
-    }
-
-    if (items.length > 0) {
-        this.itemList.setStyle('height', (this.coords[items.length - 1].y + this.itemSize.h) + 'px');
-    } else {
-        this.itemList.setStyle('height', 0);
-    }
-
-  },
-
-  /**
-   * Display a single item
-   * @return {void}
-   * @method displayItem
-   */
-  displayItem: function(item, x, y) {
-
-    if (this.filtersInited && !item.hasClass('list-item-move')) {
-      item.addClass('list-item-move');
-    }
-
-    item.setAttribute('data-pos', x + ',' + y);
-    if (this.has3dTransforms) {
-      item.setStyles({
-        'opacity': 1,
-        'visibility': 'visible'
-      }).setStyle(this.tS, 'translate3d(' + x + 'px, ' + y + 'px, 0 )');
-    } else if (item.getStyle('transform')) {
-      var animDur = this.filtersInited ? 0.6 : 0;
-
-      item.transition({
-        transform: 'translate(' + x + 'px, ' + y + 'px)',
-        duration: animDur,
-        easing: 'ease-in-out',
-        opacity: 1,
-        visibility: 'visible'
-      });
-    } else {
-      item.setStyles({
-        'left': (x - 20) + 'px',
-        'top': y + 'px',
-        'opacity': 1,
-        'visibility': 'visible'
-      });
-    }
-
+  onResize: function() {
+    this.initMasonry();
   }
-
 });
