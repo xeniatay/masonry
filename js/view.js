@@ -30,7 +30,16 @@ _.extend(PhotoView.prototype, AbstractView.prototype, {
     this.faveInput = $(this.hostElement).find('.photo-fave-checkbox');
     this.viewCount = $(this.hostElement).find('.photo-view-count');
 
-    this.img.attr('src', this.model.image_url);
+    // this.img.attr('src', this.model.image_url);
+    var h = this.model.height,
+        w = this.model.width;
+
+    this.img.css({
+      backgroundImage: 'url(' + this.model.image_url + ')',
+      paddingBottom: (h > w) ? '100%' : ( (h / w * 100) + '%' ),
+      height: 0,
+      width: (h > w) ? ( (256 / h * w) + 'px' ) : '100%'
+    });
     this.title.html(this.model.name);
     this.viewCount.html(this.model.times_viewed);
 
