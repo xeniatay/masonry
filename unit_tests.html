@@ -4,20 +4,19 @@
     <title>Mocha</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/lib/mocha.css" />
+    <link rel="stylesheet" href="styles/css/lib/mocha.css" />
   </head>
   <body>
 
   <div id="mocha"></div>
-  <script src="js/lib/underscore.js"></script>
-  <script src="js/ext/chai.js"></script>
-  <script src="js/ext/sinon.js"></script>
-  <script src="js/ext/sinon-chai.js"></script>
-  <script src="js/ext/mocha.js"></script>
+  <script src="js/lib/chai.js"></script>
+  <script src="js/lib/sinon.js"></script>
+  <script src="js/lib/sinon-chai.js"></script>
+  <script src="js/lib/mocha.js"></script>
   <script>
     mocha.setup('bdd');
   </script>
-  <script src="js/unit_tests/tests.js"></script>
+  <script data-main="js/app/app" src="node_modules/requirejs/require.js"></script>
   <script>
       mocha.run();
   </script>

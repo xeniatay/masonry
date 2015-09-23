@@ -19,7 +19,7 @@ require(['jquery', 'underscore', 'model', 'view', 'controller'], function($, _) 
 
     photosModel = new model();
 
-    // Get 500px photos, then initialize view & controller
+    // Get photos, then initialize view & controller
     photosModel.getPhotos(function(currentPage) {
       photosView = new view(photosModel);
       photosController = new controller(photosModel, photosView);
