@@ -34,7 +34,7 @@ define(function () {
         this.allPhotos.push.apply( this.allPhotos, data.photos );
         this.photos = data.photos;
 
-        onSuccess(data.current_page);
+        onSuccess();
       }, this) );
     },
 
