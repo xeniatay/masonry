@@ -1,4 +1,4 @@
-## Zenreach Frontend Coding Challenge
+## Masonry plugin
 
 ### See it in action
 
@@ -9,8 +9,7 @@ Open `index.html`, or go to [http://xeniatay.com/masonry/](http://xeniatay.com/m
 - RequireJS for MVC setup
 - Underscore and jQuery (Using CDNs with local fallback)
 - Grunt for compiling LESS
-- Bootstrap (managed with bower) - some helpers 
-- Mocha, Chai, Sinon for attempted tests
+- Bootstrap -- some helpers 
 
 #### js/app/model.js
 
@@ -84,17 +83,3 @@ Bootstrap variable overrides and additional LESS variables are in `styles/less/_
 ### To compile LESS
 
 Run `grunt` in the root directory. `styles/less/main.less` outputs to `styles/css/main.css`.
-
-### Tests
-
-Unfortunately, tests aren't implemented for this challenge. 
-
-There are *a few* tests written (`js/tests`), but I was unable to get them to run in `unit_tests.html`.
-
-##### What went wrong
-
-I used these test frameworks previously in a controlled assignment environment ([example1](https://github.com/xeniatay/cs349/blob/master/a2/js/unit_tests/provided_unit_tests.js), [example2](https://github.com/xeniatay/cs349/blob/master/a1/js/unit_tests/provided_unit_tests.js)), and thought I could use them again with no problem.
-
-Turns out, integrating these test libraries with Require broke *something*, and lack of experience with Mocha and Chai stumped me with debugging. 
-
-The problem: none of the `it()` tests are being called in `js/tests/tests.js`. 
